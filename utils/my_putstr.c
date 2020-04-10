@@ -5,7 +5,7 @@
 ** printf
 */
 
-#include "my.h"
+#include "mysh.h"
 
 int my_putstr(char const *str)
 {

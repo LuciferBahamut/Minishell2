@@ -1,65 +1,66 @@
 /*
 ** EPITECH PROJECT, 2020
-** exe bin
+** Minishell
 ** File description:
-** minishell
+** exe bin
 */
 
-#include "my.h"
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "mysh.h"
 
-char *my_getenv_path(char **envp, char *path)
+static void fill_struct(mysh_t *m)
 {
-    char *str;
-
-    for (int i = 0; envp[i]; i++)
-        if (check_path(envp[i], path) == SUCCESS) {
-            str = malloc(my_strlen(envp[i]) + 1 * sizeof(char));
-            for (int j = 5, k = 0; envp[i][j] != '\0'; j++, k++)
-                str[k] = envp[i][j];
-        }
-    return (str);
+    m->bin->status = 0;
+    m->bin->path_arg = my_getenv(m->envp, "PATH");
+    m->bin->path = my_split(m->bin->path_arg, ':');
 }
 
-int check_sig(int status)
+static int check_exist(char **paths)
 {
-    if (WIFSIGNALED(status)) {
-        if (SIGFPE == status && WCOREDUMP(status)) {
-            my_putstr_error(SEGFAULTF2);
-            my_putstr_error(SEGFAULTF3);
-            return (SUCCESS);
-        }
-        if (WCOREDUMP(status)) {
-            my_putstr_error(SEGFAULT);
-            return (SUCCESS);
-        }
-        if (SIGFPE == status) {
-            my_putstr_error(SEGFAULTF);
-            return (SUCCESS);
-        }
+    int nb = 0;
+    int j = 0;
+
+    for (j = 0; paths[j]; j++) {
+        if ((nb = access(paths[j], F_OK)) != -1)
+            break;
     }
+    if (nb == -1)
+        return (ERROR);
+    else
+        return (j);
 }
 
-int exe_bin(mshel_s *ms)
+static void free_bin(bin_t *bin)
 {
-    char *path = my_getenv_path(ms->envp, "PATH");
-    char **paths = my_split_path(path);
+    free(bin->path_arg);
+    for (int i = 0; bin->path[i] != NULL; i++)
+        free(bin->path[i]);
+    free(bin->path);
+}
+
+int exe_bin(mysh_t *m)
+{
     int j = 0;
     pid_t pid = 0;
-    char *const *arg = ms->arg;
+    char *const *arg = m->arg;
 
-    check_alias(ms);
-    for (int i = 0; paths[i]; i++)
-        paths[i] = my_strcat(paths[i], ms->arg[0]);
-    if ((j = check_exist(paths, j)) == ERROR) {
-        display_error(ms->arg[0]);
+    fill_struct(m);
+    for (int i = 0; m->bin->path[i]; i++)
+        m->bin->path[i] = my_strcat(m->bin->path[i], m->arg[0], '/');
+    if ((j = check_exist(m->bin->path)) == ERROR) {
+        my_putstr_error(m->arg[0]);
+        my_putstr_error(CMDNTF);
         return (SUCCESS);
     }
     if ((pid = fork()) == 0)
-        execve(paths[j], arg, ms->envp);
+        execve(m->bin->path[j], arg, m->envp);
     else {
-        wait(&ms->status);
-        check_sig(ms->status);
-        free(path);
+        wait(&m->bin->status);
+        check_sig(m->bin->status);
     }
+    free_bin(m->bin);
     return (SUCCESS);
 }

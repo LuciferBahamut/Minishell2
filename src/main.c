@@ -1,14 +1,19 @@
 /*
 ** EPITECH PROJECT, 2020
-** minishell
+** Minishell
 ** File description:
-** main
+** Main
 */
 
-#include "my.h"
+#include <unistd.h>
+#include "mysh.h"
 
 int main(int ac, char **av, char **envp)
 {
-    start(ac, av, envp);
+    mysh_t m;
+
+    if (ac != 1 || envp == NULL || av == NULL)
+        return (ERROR);
+    start(envp, &m);
     return (SUCCESS);
 }

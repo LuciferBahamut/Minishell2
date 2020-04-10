@@ -1,46 +1,62 @@
 /*
 ** EPITECH PROJECT, 2020
-** start
+** Minishell
 ** File description:
-** project
+** Start
 */
 
-#include "my.h"
+#include <stdlib.h>
+#include "mysh.h"
 
-char **fill_senv(char **envp)
+void multi_free(mysh_t *m)
 {
+    for (int i = 0; m->envp[i] != NULL; i++)
+        free(m->envp[i]);
+    if (m->arg != NULL)
+        for (int i = 0; m->arg[i] != NULL; i++)
+            free(m->arg[i]);
+    free(m->arg);
+    free(m->envp);
+    free(m->buff);
+    free(m->bin);
+    free(m);
+}
+
+static char **copy_env(char **envp)
+{
+    int k = 0;
     int i = 0;
-    char **str;
+    char **env;
 
-    while (envp[i])
-        i++;
-    str = malloc(sizeof(char *) * i);
-    for (int j = 0; envp[j]; j++) {
-        str[j] = malloc((my_strlen(envp[j]) + 1) * sizeof(char));
-        for (int k = 0; envp[j][k] != '\0'; k++)
-            str[j][k] = envp[j][k];
+    while (envp[k] != NULL)
+        k++;
+    env = malloc(sizeof(char *) * k + 1);
+    for (int j = 0; envp[j] != NULL; j++) {
+        env[j] = malloc(sizeof(char) * my_strlen(envp[j]) + 1);
+        for (i = 0; envp[j][i] != '\0'; i++)
+            env[j][i] = envp[j][i];
+        env[j][i] = '\0';
     }
-    return (str);
+    env[k] = NULL;
+    return (env);
 }
 
-void fill_struct(mshel_s *ms, char **envp)
+static void fill_struct(mysh_t *m, char **envp)
 {
-    ms->buffer = malloc((100 + 1) * sizeof(char));
-    ms->envp = fill_senv(envp);
-    ms->status = 0;
+    m->envp = copy_env(envp);
+    m->buff = malloc(sizeof(char) * 100);
+    m->bin = malloc(sizeof(bin_t));
 }
 
-int start(int ac, char **av, char **envp)
+int start(char **envp, mysh_t *m)
 {
-    mshel_s *ms = malloc(sizeof(mshel_s));
-
-    if (ac != 1) {
-        free(ms);
-        exit(ERROR);
+    m = malloc(sizeof(mysh_t));
+    fill_struct(m, envp);
+    if (run_shell(m) == ERROR) {
+        my_putstr(EXIT);
+        multi_free(m);
+        return (SUCCESS);
     }
-    fill_struct(ms, envp);
-    if (simple_cmd(ms) == CEOF)
-        exit(SUCCESS);
-    free(ms);
+    multi_free(m);
     return (SUCCESS);
 }

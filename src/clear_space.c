@@ -1,13 +1,14 @@
 /*
 ** EPITECH PROJECT, 2020
-** clear space & tab
+** Minishell
 ** File description:
-** minishell1
+** clear space && tab
 */
 
-#include "my.h"
+#include <stdlib.h>
+#include "mysh.h"
 
-int find_char(char *buffer, int i)
+static int find_char(char *buffer, int i)
 {
     int nb = i;
 
@@ -22,7 +23,7 @@ int find_char(char *buffer, int i)
 
 char *clear_space(char *bf)
 {
-    char *str = malloc(my_strlen(bf) * sizeof(char));
+    char *str = malloc(my_strlen(bf) * sizeof(char) + 1);
 
     for (int i = find_char(bf, 0), j = 0; bf[i] != '\0'; i++) {
         if (bf[i] == ' ' && (bf[i + 1] == ' ' || bf[i + 1] == '\t')) {
