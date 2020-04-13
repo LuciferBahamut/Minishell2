@@ -21,7 +21,7 @@ int check_space(char *buffer, char c)
 
 char **my_split(char *src, char c)
 {
-    char **str = malloc((check_space(src, c)) * sizeof(char *));
+    char **str = malloc(((check_space(src, c)) + 1) * sizeof(char *));
     int i = 0;
     int k = 0;
 
@@ -33,7 +33,7 @@ char **my_split(char *src, char c)
     i = 0;
     for (int j = 0; src[i] != '\0'; i++, k++) {
         if (src[i] == c) {
-            str[j][i] = '\0';
+            str[j][k] = '\0';
             j++;
             i++;
             k = 0;

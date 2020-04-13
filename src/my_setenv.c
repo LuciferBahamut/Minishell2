@@ -10,7 +10,7 @@
 
 char **fill_env(char **env, int nb)
 {
-    char **envp = malloc(sizeof(char *) * (nb + 1));
+    char **envp = malloc(sizeof(char *) * (nb + 2));
     int j = 0;
 
     for (int i = 0; env[i] != NULL; i++) {

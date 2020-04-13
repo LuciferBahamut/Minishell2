@@ -46,11 +46,8 @@ static void compute_line(mysh_t *m)
     int i = 0;
 
     m->buff = clear_space(m->buff);
-    for (i = 0; m->buff[i] != '\0'; i++)
-        if (m->buff[i] == '\n') {
-            m->buff[i] = '\0';
-            break;
-        }
+    for (i = 0; m->buff[i] != '\n'; i++);
+    m->buff[i] = '\0';
     if (m->buff[i - 1] == ' ' || m->buff[i - 1] == '\t')
         m->buff[i - 1] = '\0';
     m->arg = my_split(m->buff, ' ');

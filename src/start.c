@@ -30,7 +30,7 @@ static char **copy_env(char **envp)
 
     while (envp[k] != NULL)
         k++;
-    env = malloc(sizeof(char *) * k + 1);
+    env = malloc(sizeof(char *) * (k + 1));
     for (int j = 0; envp[j] != NULL; j++) {
         env[j] = malloc(sizeof(char) * my_strlen(envp[j]) + 1);
         for (i = 0; envp[j][i] != '\0'; i++)
