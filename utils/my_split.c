@@ -19,27 +19,47 @@ int check_space(char *buffer, char c)
     return (nb);
 }
 
-char **my_split(char *src, char c)
+static char **my_split_alloc(char *src, char **str, char c)
 {
-    char **str = malloc(((check_space(src, c)) + 1) * sizeof(char *));
     int i = 0;
     int k = 0;
 
-    for (int j = 0; src[i] != '\0'; i++) {
-        if (src[i] == c)
-            j++;
-        str[j] = malloc(i + 1);
-    }
-    i = 0;
     for (int j = 0; src[i] != '\0'; i++, k++) {
+        if (src[i] == c) {
+            str[j] = malloc(sizeof(char) * (k + 1));
+            k = 0;
+            j++;
+        }
+        else if (src[i + 1] == '\0') {
+            str[j] = malloc(sizeof(char) * (k + 2));
+            k = 0;
+            j++;
+        }
+    }
+    return (str);
+}
+
+char **my_split(char *src, char c)
+{
+    int nb = check_space(src, c);
+    char **str = malloc((nb + 1) * sizeof(char *));
+    int k = 0;
+
+    str = my_split_alloc(src, str, c);
+    for (int i = 0, j = 0; src[i] != '\0'; i++, k++) {
         if (src[i] == c) {
             str[j][k] = '\0';
             j++;
             i++;
             k = 0;
         }
+        else if (src[i + 1] == '\0') {
+            str[j][k] = src[i];
+            str[j][k + 1] = '\0';
+            break;
+        }
         str[j][k] = src[i];
     }
-    str[check_space(src, c)] = NULL;
+    str[nb] = NULL;
     return (str);
 }
