@@ -33,7 +33,7 @@ static char **my_split_alloc(char *src, char **str, char c)
         else if (src[i + 1] == '\0') {
             str[j] = malloc(sizeof(char) * (k + 2));
             k = 0;
-            j++;
+            break;
         }
     }
     return (str);
