@@ -61,6 +61,8 @@ typedef struct mysh_s
     char **envp;
     char *buff;
     int cmd;
+    int semi_colon;
+    int pipe;
     bin_t *bin;
 } mysh_t;
 
@@ -82,6 +84,8 @@ int exe_bin(mysh_t *m);
 char **fill_env(char **env, int nb);
 char *my_getenv(char **envp, char *path);
 int check_sig(int status);
+void check_semicolon(mysh_t *m);
+void handling_semicolon(mysh_t *m);
 
 ////////////////////
 // Fonction UTILS //

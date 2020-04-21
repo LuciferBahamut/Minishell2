@@ -22,6 +22,10 @@ static void dispatch_cmd(mysh_t *m)
         break;
     case 4 : my_exit(m);
         break;
+    case 5 : handling_semicolon(m);
+        break;
+//    case 6 : handling_pipe(m);
+//        break;
     case ERROR : exe_bin(m);
         break;
     }
@@ -50,8 +54,11 @@ static void compute_line(mysh_t *m)
     m->buff[i] = '\0';
     if (m->buff[i - 1] == ' ' || m->buff[i - 1] == '\t')
         m->buff[i - 1] = '\0';
-    m->arg = my_split(m->buff, ' ');
-    m->cmd = check_command(m->arg[0]);
+    check_semicolon(m);
+    if (m->cmd == 0) {
+        m->arg = my_split(m->buff, ' ');
+        m->cmd = check_command(m->arg[0]);
+    }
     dispatch_cmd(m);
 }
 
