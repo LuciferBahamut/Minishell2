@@ -22,6 +22,7 @@ SRC     =	src/main.c			\
 		src/handle_sig.c		\
 		src/check_semicolon.c		\
 		src/handling_semicolon.c	\
+		src/exe_exe.c			\
 		$(wildcard utils/*.c)
 
 CC      ?=       gcc

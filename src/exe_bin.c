@@ -41,25 +41,28 @@ static void free_bin(bin_t *bin)
     free(bin->path);
 }
 
+static int exe_prog(char **arg)
+{
+    if (access(arg[0], F_OK) == -1)
+        return (ERROR);
+    else
+        return (SUCCESS);
+}
+
 int exe_bin(mysh_t *m)
 {
     int j = 0;
-    pid_t pid = 0;
-    char *const *arg = m->arg;
 
     fill_struct(m);
     for (int i = 0; m->bin->path[i]; i++)
         m->bin->path[i] = my_strcat(m->bin->path[i], m->arg[0], '/');
-    if ((j = check_exist(m->bin->path)) == ERROR) {
+    if ((j = check_exist(m->bin->path)) != ERROR)
+        exe_with_path(m, j);
+    else if ((j =exe_prog(m->arg)) == SUCCESS)
+        exe_without_path(m);
+    else {
         my_putstr_error(m->arg[0]);
         my_putstr_error(CMDNTF);
-        return (SUCCESS);
-    }
-    if ((pid = fork()) == 0)
-        execve(m->bin->path[j], arg, m->envp);
-    else {
-        wait(&m->bin->status);
-        check_sig(m->bin->status);
     }
     free_bin(m->bin);
     return (SUCCESS);

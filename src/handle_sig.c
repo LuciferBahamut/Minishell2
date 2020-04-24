@@ -18,7 +18,7 @@ int check_sig(int status)
             my_putstr_error(SEGFAULTF3);
             return (SUCCESS);
         }
-        if (WCOREDUMP(status) == 11) {
+        if (WCOREDUMP(status)) {
             my_putstr_error(SEGFAULT);
             return (SUCCESS);
         }
