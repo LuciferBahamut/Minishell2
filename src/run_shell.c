@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2020
+65;5604;1c** EPITECH PROJECT, 2020
 ** Minishell
 ** File description:
 ** Run shell
@@ -67,6 +67,7 @@ int run_shell(mysh_t *m)
     size_t size = 100;
 
     while (1) {
+        m->cmd = 0;
         my_putstr(CMD);
         if (getline(&m->buff, &size, stdin) == EOF)
             return (ERROR);
