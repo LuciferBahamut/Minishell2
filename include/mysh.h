@@ -88,6 +88,7 @@ void check_semicolon(mysh_t *m);
 void handling_semicolon(mysh_t *m);
 void exe_without_path(mysh_t *m);
 void exe_with_path(mysh_t *m, int j);
+int check_arg(char *arg);
 
 ////////////////////
 // Fonction UTILS //

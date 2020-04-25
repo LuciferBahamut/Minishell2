@@ -55,19 +55,6 @@ static char **add_env(mysh_t *m, int nb, int space)
     return (envp);
 }
 
-static int check_arg(char *arg)
-{
-    int nb = 0;
-
-    if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z'))
-        nb++;
-    else if (arg[0] == '_')
-        nb++;
-    if (nb == 0)
-        return (ERROR);
-    return (SUCCESS);
-}
-
 int my_setenv(mysh_t *m)
 {
     int space = check_space(m->buff, ' ');
