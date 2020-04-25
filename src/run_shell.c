@@ -66,13 +66,10 @@ int run_shell(mysh_t *m)
 {
     size_t size = 100;
 
-    while (1) {
-        m->cmd = 0;
-        my_putstr(CMD);
-        if (getline(&m->buff, &size, stdin) == EOF)
-            return (ERROR);
-        break;
-    }
+    m->cmd = 0;
+    my_putstr(CMD);
+    if (getline(&m->buff, &size, stdin) == EOF)
+        return (ERROR);
     if (check_buf(m->buff) == ERROR)
         run_shell(m);
     else {
