@@ -58,7 +58,7 @@ int exe_bin(mysh_t *m)
         m->bin->path[i] = my_strcat(m->bin->path[i], m->arg[0], '/');
     if ((j = check_exist(m->bin->path)) != ERROR)
         exe_with_path(m, j);
-    else if ((j =exe_prog(m->arg)) == SUCCESS)
+    else if ((j = exe_prog(m->arg)) == SUCCESS)
         exe_without_path(m);
     else {
         my_putstr_error(m->arg[0]);
