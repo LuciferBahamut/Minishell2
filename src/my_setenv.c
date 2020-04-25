@@ -65,8 +65,7 @@ static int check_arg(char *arg)
         nb++;
     if (nb == 0)
         return (ERROR);
-    else
-        return (SUCCESS);
+    return (SUCCESS);
 }
 
 int my_setenv(mysh_t *m)

@@ -27,7 +27,7 @@ char *my_getenv(char **envp, char *path)
     for (int i = 0; envp[i] != NULL; i++)
         if (check_path(envp[i], path) == SUCCESS) {
             str = malloc((my_strlen(envp[i]) + 1) * sizeof(char));
-            for(int j = 5; envp[i][j] != '\0'; j++, k++)
+            for (int j = 5; envp[i][j] != '\0'; j++, k++)
                 str[k] = envp[i][j];
         }
     str[k] = '\0';
