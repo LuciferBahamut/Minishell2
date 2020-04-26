@@ -35,13 +35,12 @@ static void reset_struct(mysh_t *m)
 
 static char *del_space(char *str)
 {
-    int nb = check_space(str, ' ');
     int max = my_strlen(str);
 
     str = clear_space(str);
-    nb -= 1;
-    max = max - nb;
-    str[max] = '\0';
+    max = max - 1;
+    if (str[max] == ' ' || str[max] == '\t')
+        str[max] = '\0';
     return (str);
 }
 

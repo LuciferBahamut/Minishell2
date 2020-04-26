@@ -1,5 +1,5 @@
 /*
-65;5604;1c** EPITECH PROJECT, 2020
+** EPITECH PROJECT, 2020
 ** Minishell
 ** File description:
 ** Run shell
@@ -24,8 +24,6 @@ static void dispatch_cmd(mysh_t *m)
         break;
     case 5 : handling_semicolon(m);
         break;
-//    case 6 : handling_pipe(m);
-//        break;
     case ERROR : exe_bin(m);
         break;
     }

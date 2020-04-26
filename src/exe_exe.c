@@ -15,8 +15,13 @@ void exe_without_path(mysh_t *m)
     pid_t pid = 0;
     char *const *arg = m->arg;
 
-    if ((pid = fork()) == 0)
+    if (m->pipe == 6) {
         execve(m->arg[0], arg, m->envp);
+        return;
+    }
+    else
+        if ((pid = fork()) == 0)
+            execve(m->arg[0], arg, m->envp);
     wait(&m->bin->status);
     check_sig(m->bin->status);
 }
@@ -26,8 +31,13 @@ void exe_with_path(mysh_t *m, int j)
     pid_t pid = 0;
     char *const *arg = m->arg;
 
-    if ((pid = fork()) == 0)
-        execve(m->bin->path[j], arg, m->envp);
+    if (m->pipe == 6) {
+        execve(m->arg[0], arg, m->envp);
+        return;
+    }
+    else
+        if ((pid = fork()) == 0)
+            execve(m->bin->path[j], arg, m->envp);
     wait(&m->bin->status);
     check_sig(m->bin->status);
 }

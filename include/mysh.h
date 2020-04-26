@@ -34,11 +34,19 @@
 ////////////
 
 #define CMDNTF ": Command not found.\n"
+// exit //
 #define EXIT "exit\n"
+// cd //
 #define CDER "cd: Too many arguments.\n"
+#define PERMDEN ": Permission denied.\n"
+#define NAD ": Not a directory.\n"
+#define NSFOD ": No such file or directory.\n"
+// setenv //
 #define SETER "setenv: Too many arguments.\n"
 #define SETER2 "setenv: Variable name must begin with a letter.\n"
+// unsetenv //
 #define USETER "unsetenv: Too few arguments.\n"
+// segfault //
 #define SEGFAULT "Segmentation fault (core dumped)\n"
 #define SEGFAULTF "Floating exeption (coredumped)\n"
 #define SEGFAULTF2 "Segmentation fault (core dumped) && Floating Point"
@@ -94,14 +102,20 @@ int check_arg(char *arg);
 // Fonction UTILS //
 ////////////////////
 
+// putchar //
 void my_putchar(char c);
 void my_putchar_error(char c);
+// putstr //
 int my_putstr(char const *str);
 int my_putstr_error(char const *str);
+// strlen //
 int my_strlen(char const *str);
+// split //
 char **my_split(char *src, char c);
 int check_space(char *src, char c);
+// strcmp //
 int my_strcmp(char const *str1, char const *str2);
+// strcat //
 char *my_strcat(char *dest, char *src, char c);
 
 #endif // MY_SH_ //
