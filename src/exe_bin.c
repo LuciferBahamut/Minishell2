@@ -15,6 +15,8 @@ static void fill_struct(mysh_t *m)
 {
     m->bin->status = 0;
     m->bin->path_arg = my_getenv(m->envp, "PATH");
+    if (m->bin->path_arg == NULL)
+        return;
     m->bin->path = my_split(m->bin->path_arg, ':');
 }
 
@@ -54,6 +56,11 @@ int exe_bin(mysh_t *m)
     int j = 0;
 
     fill_struct(m);
+    if (m->bin->path_arg == NULL) {
+        my_putstr_error(m->arg[0]);
+        my_putstr_error(CMDNTF);
+        return (SUCCESS);
+    }
     for (int i = 0; m->bin->path[i]; i++)
         m->bin->path[i] = my_strcat(m->bin->path[i], m->arg[0], '/');
     if ((j = check_exist(m->bin->path)) != ERROR)
