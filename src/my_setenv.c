@@ -67,7 +67,7 @@ int my_setenv(mysh_t *m)
         if (space >= 3)
             my_putstr_error(SETER);
         else
-            my_putstr_error(SETER2);
+            return (SUCCESS);
     }
     else {
         for (int i = 0; m->envp[i] != NULL; i++, nb++);

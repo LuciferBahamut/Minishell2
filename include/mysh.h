@@ -44,6 +44,7 @@
 // setenv //
 #define SETER "setenv: Too many arguments.\n"
 #define SETER2 "setenv: Variable name must begin with a letter.\n"
+#define SETER3 "setenv: Variable name must contain alphanumeric characters.\n"
 // unsetenv //
 #define USETER "unsetenv: Too few arguments.\n"
 // segfault //

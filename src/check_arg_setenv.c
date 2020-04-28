@@ -35,10 +35,14 @@ static int check_next_char(char c)
 
 int check_arg(char *arg)
 {
-    if (check_first_char(arg[0]) == ERROR)
+    if (check_first_char(arg[0]) == ERROR) {
+        my_putstr_error(SETER2);
         return (ERROR);
+    }
     for (int i = 1; arg[i] != '\0'; i++)
-        if (check_next_char(arg[i]) == ERROR)
+        if (check_next_char(arg[i]) == ERROR) {
+            my_putstr_error(SETER3);
             return (ERROR);
+        }
     return (SUCCESS);
 }
