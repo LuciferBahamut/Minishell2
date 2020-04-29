@@ -15,11 +15,8 @@
 static int check_path_copy(mysh_t *m)
 {
     for (int i = 0; m->bin->copy_path != NULL; i++)
-        if (my_strcmp(m->arg[0], m->bin->copy_path[i])) {
-            my_putstr_error(m->arg[0]);
-            my_putstr_error(PERMDEN);
+        if (my_strcmp(m->arg[0], m->bin->copy_path[i]))
             return (ERROR);
-        }
     return (SUCCESS);
 }
 
@@ -28,11 +25,9 @@ static int check_is_dir(mysh_t *m, int id, int j)
     char **split = my_split(m->arg[0], '/');
     struct stat st;
 
-    if (check_path_copy(m) == ERROR)
-        return (ERROR);
     if (id == 0) {
         stat(split[1], &st);
-        if (S_ISDIR(st.st_mode)) {
+        if (S_ISDIR(st.st_mode) || check_path_copy(m) == ERROR) {
             my_putstr_error(m->arg[0]);
             my_putstr_error(PERMDEN);
             return (ERROR);
