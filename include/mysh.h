@@ -60,6 +60,7 @@
 typedef struct bin_s
 {
     char *path_arg;
+    char **copy_path;
     char **path;
     int status;
 } bin_t;

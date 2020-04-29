@@ -18,6 +18,7 @@ static void fill_struct(mysh_t *m)
     if (m->bin->path_arg == NULL)
         return;
     m->bin->path = my_split(m->bin->path_arg, ':');
+    m->bin->copy_path = my_split(m->bin->path_arg, ':');
 }
 
 static int check_exist(char **paths)
